@@ -1,0 +1,130 @@
+* {
+  font-size: 10px;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Scrollbars */
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: white black;
+}
+
+/* Chrome, Edge, Safari */
+*::-webkit-scrollbar {
+  width: 16px;
+}
+
+*::-webkit-scrollbar-track {
+  background: black;
+  
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: black;
+  border-radius: 12px;
+  border: 3px solid white;
+}
+
+html {
+  /* So that the colors would fill the entire page */
+  margin: 0;
+  height: 100%;
+}
+body {
+  background: linear-gradient(120deg, #fd5c63, #c30b03);
+  animation: fadeInAnimation ease 2.8s;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+  animation-delay: .2s;
+} 
+@keyframes fadeInAnimation {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+.container-header {
+  font-size: 4rem;
+  text-align: center;
+  font-weight: 300;
+  margin-top: 24px;
+  margin-bottom: 16px;
+}
+
+.center {
+  margin: auto;
+  width: 40%;
+  border: 1px black solid;
+  border-radius: 40px;
+  padding: 6px;
+}
+.container {
+  margin-top: 10vh;
+  text-align: center;
+}
+
+button {
+  font-size: 1.2rem;
+}
+.task-list {
+  margin-top: 18px;
+  list-style-type: none;
+  color: black;
+}
+.task-list li {
+  color: white;
+  font-size: 2rem;
+  margin: 12px 12px 12px 12px;
+}
+.hidden {
+  display: none;
+}
+
+/* Set list item display as flexbox */
+.list-item {
+  position: relative;
+  /* display: flex;
+  align-items: center;
+  justify-content: flex-start; */
+}
+
+
+/* Button style */
+.command-button-div {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+.list-item-check {
+  background-image: linear-gradient(to right, #0ea347 0%, #22d475 100%);
+} 
+.list-item-cross {
+  background-image: linear-gradient(to right, #ff0101d3 0%, #ee5252 100%);
+} 
+
+/* Main part (top) styling */
+.btn {
+  margin: 2px;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.main-buttons-container {
+  margin: 12px 0 12px 0 !important;
+}
+
+.submit, .clear-list {
+  font-size: 1.4rem;
+}
+
+.input {
+  font-size: 1.4rem;
+  border-radius: 8px;
+  padding-left: 6px;
+}
+
+

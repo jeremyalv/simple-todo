@@ -1,11 +1,14 @@
-import { $, ENTER_KEYCODE, CROSS_HEX, CHECK_HEX, CROSS_ITEM_CLASSNAME, CHECK_ITEM_CLASSNAME } from './config.js';
+import { $, ENTER_KEYCODE, CROSS_HEX, CHECK_HEX, CROSS_ITEM_CLASSNAME, CHECK_ITEM_CLASSNAME, BUTTON_DIV_CLASSNAME } from './config.js';
 
+// Main data structure, used for storing queued tasks
 let taskList = [];
 
 // Controller Functions
 function controlSubmit (event) {
   // Using event bubbling to chain multiple callback functions within a single event when a button is clicked
   if (event.target.classList.contains("submit") || event.target.classList.contains('input')) {
+    // console.log(taskList);
+
     // Reads the value from input box
     const inputValue = $(".input").value;
 
@@ -36,9 +39,10 @@ function controlPressedEnter(event) {
 }
 
 function controlRemoveListItem(event) {
-  // If there is 1 task remaining in taskList, when we delete it we would also delete clear the task list. We wouldn't want to have a section of the page that contains nothing (because it would be empty after we deleted all tasks)
+  // If there is 1 task remaining in taskList, when we delete it we would also delete the task list. We wouldn't want to have a section of the page that contains nothing (because it would be empty after we deleted all tasks)
   if (taskList.length === 1) {
     clearTaskList();
+    hideTaskList();
     return;
   }
 
@@ -58,7 +62,7 @@ function storeInputValue(inputValue) {
 }
 
 function getTaskName(taskList) {
-  // We use Array.length - 1 instead of .pop() because it does not modify the original array.
+  // We use Array.length - 1 instead of .pop() because this way it will not modify the original array.
   const lastItemIndex = taskList.length - 1;
   return taskList[lastItemIndex];
 }
@@ -66,11 +70,11 @@ function getTaskName(taskList) {
 function clearTaskList() {
   for (let i = 0; i < taskList.length; ++i) {
     // Clear the HTML Elements one by one
-    const parent = $('.tasks').getElementsByTagName("ul")[0];
-    const child = parent.getElementsByTagName('li')[0];
+    const ul = $('.tasks').getElementsByTagName("ul")[0];
+    const li = ul.getElementsByTagName('li')[0];
     
     // Remove child element
-    parent.removeChild(child);
+    ul.removeChild(li);
   }
   
   // Set the taskList array back to empty
@@ -85,17 +89,23 @@ function createListItem(taskName) {
   const li = document.createElement("li");
 
   // Add the task name to the list item
-  const textnode = document.createTextNode(taskName);
-  li.appendChild(textnode);
+  const textNode = document.createTextNode(taskName);
+  li.appendChild(textNode);
 
   // Since these elements are added dynamically, we must embed an onclick and it's callback function so the app runs just as we expected.
-  
+
+  // Create a div for command-buttons
+  const buttonDiv = document.createElement('div');
+  buttonDiv.setAttribute('class', BUTTON_DIV_CLASSNAME);
+  buttonDiv.setAttribute('id', `button-div-${taskList.length}`)
+  li.appendChild(buttonDiv);
+
   // Create a cross button
   const cross = document.createElement('button');
   cross.innerHTML = CROSS_HEX;
   cross.setAttribute('class', CROSS_ITEM_CLASSNAME)
   cross.setAttribute('id', `cross-${taskList.length}`)
-  li.appendChild(cross);
+  buttonDiv.appendChild(cross);
   cross.onclick = controlRemoveListItem;
 
   // Create a checkmark button
@@ -103,7 +113,7 @@ function createListItem(taskName) {
   check.innerHTML = CHECK_HEX;
   check.setAttribute('class', CHECK_ITEM_CLASSNAME)
   check.setAttribute('id', `check-${taskList.length}`)
-  li.appendChild(check);
+  buttonDiv.appendChild(check);
   check.onclick = controlRemoveListItem;
 
   // Append the list item to the DOM
@@ -119,8 +129,8 @@ function removeListItem(event) {
   // Selects the element we want to start from -- in this case, the button.
   const button = document.getElementById(id);
 
-  // Delete the element -- traverses up the node tree twice (button -> li -> ul) and delete child (li)
-  const li = button.parentNode;
+  // Delete the element -- traverses up the node tree twice (button -> div -> li) and delete child (li)
+  const li = button.parentNode.parentElement;
 
   // Store the id of the list item that we want to delete
   const listID = document.getElementById(li.id);
@@ -130,6 +140,12 @@ function removeListItem(event) {
 
   // Removes the li
   li.parentNode.removeChild(li);
+
+  // Gets the index of taskName in taskList
+  const taskID = taskName.indexOf(taskName)
+
+  // Removes the task from taskList
+  taskList.splice(taskID, 1);
 }
 
 function showTaskList() {
@@ -147,12 +163,11 @@ function hideTaskList() {
   // Select the HTML element
   const ul = $(".task-list");
   let classes = Object.values(ul.classList);
-  // Remove the 'hidden' class from our list
+  // Adds the 'hidden' class from our list
   if (!classes.includes("hidden")) {
     ul.classList.add("hidden");
   }
 }
-
 
 // Initialization function
 function init() {

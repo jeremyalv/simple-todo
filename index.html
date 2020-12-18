@@ -3,22 +3,26 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css">
-  <title>World's Simplest Todo App</title>
+  <link rel="stylesheet" href="styles/style.css">
+  <link rel="stylesheet" href="styles/button-style.css">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">  
+  <title>Optimizy</title>
 </head>
 <body>
   <div class="container center">
-    <h2 class="container-header">To-Do List</h2>
-    <input class="input" type="text" placeholder="Add an item!" size="30" >
-    <!-- addEventListener to buttons -->
-    <button type="button" class="submit">Submit</button> 
-    <button type="button" class="clear-list">Clear List</button>
+    <h2 class="container-header">Optimizy</h2>
+    <input class="input" type="text" placeholder="Add an item!" size="20" autocomplete="off">
+    <div class="bs-container main-buttons-container">
+      <button type="button" class="btn bs-btn bs-btn-1 submit">Submit</button> 
+      <button type="button" class="btn bs-btn bs-btn-4 clear-list">Clear List</button>
+    </div>
   </div>
   <div class="tasks">
     <ul class="task-list center hidden">
     </ul>
   </div>
   
-  <script src="script.js"></script>
+  <script src="script.js" type="module"></script>
 </body>
 </html>
