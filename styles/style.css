@@ -37,7 +37,6 @@ body {
   animation: fadeInAnimation ease 2.8s;
   animation-iteration-count: 1;
   animation-fill-mode: forwards;
-  animation-delay: .2s;
 } 
 @keyframes fadeInAnimation {
   0% {
